@@ -64,7 +64,20 @@ document.querySelector(".submitEntry").addEventListener("click", () => {
     let totalMarks = document.querySelector(".totalMarksAv").value
     let perc = marks * 100 / totalMarks
 
-    let entry = [name, marks, perc + "%"]
+    let grade = 0;
+
+    for (let i = 0; i < grades.length; i++) {
+        if (perc >= gradeLowerBounds[i][0]) {
+            grade = grades[i][0]
+            break;
+        }
+        
+    }
+    console.log(grade);
+
+    let entry = [name, marks, perc + "%", grade]
+
+
     data.push(entry)
 
     document.querySelector(".studentName").value = ""
@@ -78,7 +91,7 @@ document.querySelector(".exportFile").addEventListener("click", () => {
     
     let csvContent = "data:text/csv;charset=utf-8,";
     
-    rows.forEach(function(rowArray) {
+    rows.forEach((rowArray) => {
         let row = rowArray.join(",");
         csvContent += row + "\r\n";
     });
@@ -128,12 +141,12 @@ document.querySelector(".submitGradeParams").addEventListener("click", () => {
     let vals = document.querySelectorAll(".container > input")
 
     let ordVal = 0
-    let tempArr = []
+    
     vals.forEach((node) => {
         ordVal+=1
         if (node.value) {
             if (ordVal % 2 == 0) {
-                if (node.value.contains("%")) {
+                if (node.value.includes("%")) {
                     node.value.replace("%", "")
                 }
                 if (+node.value) {
@@ -147,4 +160,47 @@ document.querySelector(".submitGradeParams").addEventListener("click", () => {
             }
         }
     })
+
+    let numOfSwaps = 0
+    const bubbleSort = () => {
+        for (let i = 0; i < gradeLowerBounds.length; i++) {
+            if (i != gradeLowerBounds - 1) {
+                if (gradeLowerBounds[i][0] > gradeLowerBounds[i + 1][0]) {
+                    let temp = gradeLowerBounds[i]
+                    gradeLowerBounds[i] = gradeLowerBounds[i + 1]
+                    gradeLowerBounds[i + 1] = temp
+                    numOfSwaps+=1
+                }
+            }
+
+            if (numOfSwaps > 0) {
+                numOfSwaps = 0
+                bubbleSort()
+            }
+
+        }
+    }
+
+    const bubbleSortGradeNames = () => {
+        
+        for (let i = 0; i < grades.length; i++) {
+            for (let x = 0; x < gradeLowerBounds.length; x++) {
+                
+                if (grades[i][1] == gradeLowerBounds[x][1]) {
+                    let temp = grades[x]
+                    grades[x] = grades[i]
+                    grades[i] = temp
+                }
+                
+    
+                
+    
+            }
+        }
+
+        for (let i = 0; i < grades.length; i++) {
+            let tempGradePos = grades[i].shift()
+            let tempBoundPos = gradeLowerBounds[i].shift()
+        }
+    }
 })
