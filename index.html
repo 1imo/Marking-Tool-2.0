@@ -5,15 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marking Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <button class="menu" onclick="menuPopup()">Menu</button>
+    <button class="menu hidden" onclick="menuPopup()">Menu</button>
+
+    <section class="menuLarge">
+        <button class="calcMode">Calculate Mode</button>
+        <button class="totalMarksLg">Total Marks</button>
+        <button class="questCount">Total Questions</button>
+        <button class="gradeBoundariesLg">Grade Boundaries</button>
+    </section>
 
     <section class="inputFields">
-        <input type="text" placeholder="Name" class="studentName">
-        <input type="text" placeholder="Marks received" class="marksReceived">
-        <button class="submitEntry">Submit Marks</button>
+        <input type="text" placeholder="Name:" class="studentName">
+        <input type="text" placeholder="Marks received:" class="marksReceived">
+        <div class="buttonsMain">
+            <button class="resetEntry">Reset</button>
+            <button class="submitEntry">Submit</button>
+        </div>
     </section>
 
     <section class="modal hidden">

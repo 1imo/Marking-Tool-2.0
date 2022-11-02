@@ -128,7 +128,8 @@ submitParamsButton.addEventListener("click", () => {
             gradeBoundary.placeholder = "Lower Grade Bound"
             container.append(gradeInput, gradeBoundary)
             gradeInputs.append(container)
-            document.querySelector(".gradeBounds").append(gradeInputs)
+            let parentNode = document.querySelector(".gradeBounds").parentNode
+            parentNode.insertBefore(gradeInputs, document.querySelector(".gradeBounds"))
         }
 
 

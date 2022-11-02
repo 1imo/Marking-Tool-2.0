@@ -1,3 +1,166 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+
+    position: relative;
+    display: flex; 
+}
+
+:root {
+    --regular: 400;
+    --bold: 700;
+    --black: 900;
+
+    --pink: #FF206E;
+    --lightGrey: #F1EDEE;
+    --darkGrey: #686963;
+}
+
+.menuLarge {
+    display: flex;
+    width: 100vw;
+    height: 42px;
+    margin-top: 24px;
+    align-items: center;
+    justify-content: center;
+}
+
+.menuLarge > button {
+    height: 42px;
+    width: 272px;
+    color: var(--pink);
+    text-align: center;
+    background-color: #ffffff;
+    border: none;
+    font-size: 18px;
+    font-weight: var(--bold);
+}
+
+.inputFields {
+    align-self: center;
+    justify-self: center;;
+    width: 272px;
+    height: 198px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.inputFields > input {
+    width: 224px;
+    height: 54px;
+    border: none;
+    border-radius: 24px;
+    font-size: 18px;
+    color: var(--darkGrey);
+    background-color: var(--lightGrey);
+    padding: 0px 24px;
+}
+
+.inputFields > input:focus {
+    border-color: var(--lightGrey);
+}
+
+.buttonsMain {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonsMain > button {
+    width: 130px;
+    height: 54px;
+    font-size: 18px;
+    font-weight: var(--bold);
+    color: #ffffff;
+    background-color: var(--pink);
+    text-align: center;
+    border: none;
+    border-radius: 24px;
+}
+
+.exportFile {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    margin-top: -48px;
+    font-size: 18px;
+    font-weight: var(--bold);
+    color: #ffffff;
+    background-color: var(--pink);
+    text-align: center;
+    border: none;
+    border-radius: 24px;
+    width: 272px;
+    height: 54px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .hidden {
     display: none;
 }
