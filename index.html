@@ -14,10 +14,18 @@
     <button class="menu hidden" onclick="menuPopup()">Menu</button>
 
     <section class="menuLarge">
-        <button class="calcMode">Calculate Mode</button>
-        <button class="totalMarksLg">Total Marks</button>
-        <button class="questCount">Total Questions</button>
-        <button class="gradeBoundariesLg">Grade Boundaries</button>
+        <div class="calcMode">
+            <button onclick="calculateMode()">Calculate Mode</button>
+        </div>
+        <div class="totalMarks">
+            <button onclick="totalMarksMode()">Total Marks</button>
+        </div>
+        <div class="questCount">
+            <button onclick="questionCountMode()">Total Questions</button>
+        </div>
+        <div class="gradeBoundariesLg">
+            <button onclick="gradeBoundariesMode()">Grade Boundaries</button>
+        </div>
     </section>
 
     <section class="inputFields">

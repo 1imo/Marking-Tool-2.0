@@ -30,7 +30,7 @@ body {
     justify-content: center;
 }
 
-.menuLarge > button {
+.menuLarge > div > button {
     height: 42px;
     width: 272px;
     color: var(--pink);
@@ -40,6 +40,76 @@ body {
     font-size: 18px;
     font-weight: var(--bold);
 }
+
+.menuPopup {
+    padding: 24px;
+    width: 272px;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: space-between;
+    box-shadow: 0px 1px 24px rgba(104, 105, 99, 0.24);
+    border-radius:6px 12px;
+}
+
+.calcMode {
+    /* display: flex;
+    flex-direction: column;
+    gap: 18px; */
+}
+
+.radioContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 224px;
+    height: 54px;
+    border-radius: 24px;
+    background-color: var(--lightGrey);
+    color: var(--darkGrey);
+    padding: 0px 24px;
+
+    font-size: 18px;
+}
+
+.submitMenuBtn {
+    font-size: 18px;
+    font-weight: var(--bold);
+    color: var(--pink);
+    text-align: center;
+    background-color: #fff;
+    border: none;
+    height: 42px;
+}
+
+input[type="checkbox"] {
+    height: 36px;
+    width: 36px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    border-radius: 24px;
+    display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow:inset 24px 24px var(--pink);
+}
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+
 
 .inputFields {
     align-self: center;
@@ -65,10 +135,18 @@ body {
     color: var(--darkGrey);
     background-color: var(--lightGrey);
     padding: 0px 24px;
+    outline: none;
+    transition: 120ms transform ease-in-out;
+
+    
 }
 
 .inputFields > input:focus {
-    border-color: var(--lightGrey);
+    -webkit-appearance: none;
+    appearance: none;
+
+    border: 2px solid var(--darkGrey);
+    /* outline-offset: -2px; */
 }
 
 .buttonsMain {

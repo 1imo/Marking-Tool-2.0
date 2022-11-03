@@ -112,6 +112,38 @@ menuPopup = () => {
     
 }
 
+let menuElement = document.createElement("div");
+menuElement.classList.add("menuPopup");
+let submitBtnMenu = document.createElement("button");
+submitBtnMenu.classList.add("submitMenuBtn");
+submitBtnMenu.textContent = "Submit"
+
+
+const calculateMode = () => {
+    let header = document.createElement("p")
+    let headerText = document.createTextNode("Calculate Mode");
+    header.appendChild(headerText)
+    let container = document.createElement("div");
+    container.classList.add("radioContainer")
+    let text = document.createElement("p");
+    let textNode = document.createTextNode("Enabled:")
+    text.appendChild(textNode);
+    let radioBtn = document.createElement("input")
+    radioBtn.type = "checkbox"
+    container.appendChild(text)
+    container.appendChild(radioBtn)
+
+    let calcModeBtn = document.querySelector(".calcMode");
+    calcModeBtn.appendChild(menuElement)
+    menuElement.appendChild(header)
+    menuElement.appendChild(container)
+    menuElement.appendChild(submitBtnMenu)
+}
+
+// document.querySelector(".calcMode").addEventListener("click", () => {
+//     calculateMode()
+// })
+
 submitParamsButton.addEventListener("click", () => {
     if (+document.querySelector(".gradeCount").value > 0) {
         let gradeInputs = new DocumentFragment()
