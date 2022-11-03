@@ -48,8 +48,12 @@ let grades = []
 let gradeLowerBounds = []
 
 let calculateModeBool = false;
-let totalMarksValue = undefined;
-let totalQuestionsValue = undefined;
+let totalMarksValue = 0;
+let totalQuestionsValue = 0;
+
+let questionCounter = 0;
+let marksCounter = 0;
+
 
 const download = (content, filename, contentType) => {
     const a = document.createElement("a");
@@ -65,29 +69,85 @@ const download = (content, filename, contentType) => {
 document.querySelector(".submitEntry").addEventListener("click", () => {
     let name = document.querySelector(".studentName").value
     let marks = document.querySelector(".marksReceived").value
-    let totalMarks = document.querySelector(".totalMarksAv").value
-    let perc = marks * 100 / totalMarks
+    let perc;
+    
 
     let grade = 0;
 
+    // console.log(calculateModeBool)
+    // console.log(totalMarksValue)
+    // console.log(totalQuestionsValue)
+    // console.log(questionCounter)
+    console.log(grades)
+
+    
+
+    
+
+     if (calculateModeBool) {
+        if (+marks || marks == "0") {
+            console.log("RUNNING")
+            if (marks == "0") {
+                marksCounter+=0
+            } else {
+                marksCounter+=+marks
+            }
+            questionCounter+=1
+        }
+        
+        
+    }
+    if (calculateModeBool && questionCounter == totalQuestionsValue) {
+        perc = marksCounter * 100 / totalMarksValue
+        let entry;
+        if (grades.length >= 1) {
+            entry = [name, marksCounter, perc + "%", getGrade(perc)]
+        } else {
+            entry = [name, marksCounter, perc + "%"]
+        }
+        data.push(entry)
+        
+        document.querySelector(".studentName").value = ""
+        marksCounter = 0
+        questionCounter = 0
+    }
+
+    if (!calculateModeBool) {
+        if (+marks || marks == "0") {
+            let receivedMarks;
+
+            if (+marks) {
+                receivedMarks = +marks
+            } else {
+                receivedMarks = 0
+            }
+        
+            perc = receivedMarks * 100 / totalMarks
+            let entry;
+            if (grades.length >= 1) {
+                entry = [name, receivedMarks, perc + "%", getGrade(perc)]
+            } else {
+                entry = [name, receivedMarks, perc + "%"]
+            }
+            data.push(entry)
+        
+            document.querySelector(".studentName").value = ""
+        }
+    }
+        
+    document.querySelector(".marksReceived").value = ""
+    
+})
+
+getGrade = (percen) => {
     for (let i = 0; i < grades.length; i++) {
-        if (perc >= gradeLowerBounds[i][0]) {
+        if (percen >= gradeLowerBounds[i][0]) {
             grade = grades[i][0]
             break;
         }
         
     }
-    console.log(grade);
-
-    let entry = [name, marks, perc + "%", grade]
-
-
-    data.push(entry)
-
-    document.querySelector(".studentName").value = ""
-    document.querySelector(".marksReceived").value = ""
-    
-})
+}
 
 document.querySelector(".exportFile").addEventListener("click", () => {
 
@@ -146,10 +206,10 @@ const calculateMode = () => {
     let calcModeBtn = document.querySelector(".calcMode");
 
     let rect = calcModeBtn.getBoundingClientRect();
-    console.log(rect.top, rect.right, rect.bottom, rect.left);
+    // console.log(rect.top, rect.right, rect.bottom, rect.left);
 
     const menuOpen = () => {
-        console.log(calculMode)
+        // console.log(calculMode)
         if (calculMode == false) {
             menuElement.classList.remove("hidden")
 
@@ -234,7 +294,7 @@ totalMarksMode = () => {
     document.querySelector(".submitMenuBtn").addEventListener("click", () => {
         if (+radioBtn.value) {
             totalMarksValue = +radioBtn.value
-            console.log(totalMarksValue)
+            // console.log(totalMarksValue)
             totalMarksMode()
         } else {
             totalMarksMode()
@@ -260,14 +320,14 @@ questionCountMode = () => {
     let calcModeBtn = document.querySelector(".questCount");
 
     let rect = calcModeBtn.getBoundingClientRect();
-    console.log(rect.top, rect.right, rect.bottom, rect.left);
+    // console.log(rect.top, rect.right, rect.bottom, rect.left);
 
     const menuOpen = () => {
-        console.log(calculMode)
+        // console.log(calculMode)
         if (calculMode == false) {
             menuElement.classList.remove("hidden")
 
-            console.log(menuElement.children)
+            // console.log(menuElement.children)
             menuElement.appendChild(header)
             menuElement.appendChild(radioBtn)
             menuElement.appendChild(submitBtnMenu)
@@ -310,14 +370,14 @@ gradeBoundariesMode = () => {
     let calcModeBtn = document.querySelector(".gradeBoundariesLg");
 
     let rect = calcModeBtn.getBoundingClientRect();
-    console.log(rect.top, rect.right, rect.bottom, rect.left);
+    // console.log(rect.top, rect.right, rect.bottom, rect.left);
 
     const menuOpen = () => {
-        console.log(calculMode)
+        // console.log(calculMode)
         if (calculMode == false) {
             menuElement.classList.remove("hidden")
 
-            console.log(menuElement.children)
+            // console.log(menuElement.children)
             menuElement.appendChild(header)
             menuElement.appendChild(radioBtn)
             menuElement.appendChild(submitBtnMenu)
@@ -373,15 +433,93 @@ gradeBoundariesMode = () => {
                 menuElement.appendChild(container)
             }
 
+            submitBtnMenu.classList.add("submitBtnGradeBounds")
+
             menuElement.appendChild(submitBtnMenu)
 
+            document.querySelector(".submitBtnGradeBounds").addEventListener("click", () => {
+
+                console.log("CLICK")
+                let vals = document.querySelectorAll(".container > input")
+
+                let ordVal = 0
+                
+                vals.forEach((node) => {
+                    ordVal += 1
+                    console.log(node)
+                    if (node.value) {
+                        
+                        if (ordVal % 2 == 0) {
+                            if (node.value.includes("%")) {
+                                node.value.replace("%", "")
+                            }
+                            if (+node.value) {
+                                let ord = [+node.value, ordVal - 1]
+                                gradeLowerBounds.push(ord)
+                                
+                            } else {
+                                // Focus on rogue input
+                            }
+
+                        } else {
+                            let ord = [node.value, ordVal - 1]
+                            grades.push(ord)
+                        }
+                    }
+                    console.log(gradeLowerBounds)
+                    console.log(grades)
+                })
+
+                let numOfSwaps = 0
+                const bubbleSort = () => {
+                    for (let i = 0; i < gradeLowerBounds.length; i++) {
+                        if (i != gradeLowerBounds - 1) {
+                            if (gradeLowerBounds[i][0] > gradeLowerBounds[i + 1][0]) {
+                                let temp = gradeLowerBounds[i]
+                                gradeLowerBounds[i] = gradeLowerBounds[i + 1]
+                                gradeLowerBounds[i + 1] = temp
+                                numOfSwaps+=1
+                            }
+                        }
+
+                        if (numOfSwaps > 0) {
+                            numOfSwaps = 0
+                            bubbleSort()
+                        }
+
+                    }
+                }
+
+                const bubbleSortGradeNames = () => {
+                    
+                    for (let i = 0; i < grades.length; i++) {
+                        for (let x = 0; x < gradeLowerBounds.length; x++) {
+                            
+                            if (grades[i][1] == gradeLowerBounds[x][1]) {
+                                let temp = grades[x]
+                                grades[x] = grades[i]
+                                grades[i] = temp
+                            }
+                        }
+                    }
+
+                    for (let i = 0; i < grades.length; i++) {
+                        let tempGradePos = grades[i].shift()
+                        let tempBoundPos = gradeLowerBounds[i].shift()
+                    }
+                }
+
+                calculMode = true;
+                gradeBoundariesMode()
+            })
+            
 
 
-            // gradeBoundariesMode()
         } else {
             gradeBoundariesMode()
         }
     })
+    // gradeBoundariesMode()
     
 }
 
@@ -424,70 +562,3 @@ submitParamsButton.addEventListener("click", () => {
     }
 })
 
-document.querySelector(".submitGradeParams").addEventListener("click", () => {
-    let vals = document.querySelectorAll(".container > input")
-
-    let ordVal = 0
-    
-    vals.forEach((node) => {
-        ordVal+=1
-        if (node.value) {
-            if (ordVal % 2 == 0) {
-                if (node.value.includes("%")) {
-                    node.value.replace("%", "")
-                }
-                if (+node.value) {
-                    gradeLowerBounds.push([+node.value, ordVal - 1])
-                } else {
-                    // Focus on rogue input
-                }
-
-            } else {
-                grades.push([node.value, ordVal - 1])
-            }
-        }
-    })
-
-    let numOfSwaps = 0
-    const bubbleSort = () => {
-        for (let i = 0; i < gradeLowerBounds.length; i++) {
-            if (i != gradeLowerBounds - 1) {
-                if (gradeLowerBounds[i][0] > gradeLowerBounds[i + 1][0]) {
-                    let temp = gradeLowerBounds[i]
-                    gradeLowerBounds[i] = gradeLowerBounds[i + 1]
-                    gradeLowerBounds[i + 1] = temp
-                    numOfSwaps+=1
-                }
-            }
-
-            if (numOfSwaps > 0) {
-                numOfSwaps = 0
-                bubbleSort()
-            }
-
-        }
-    }
-
-    const bubbleSortGradeNames = () => {
-        
-        for (let i = 0; i < grades.length; i++) {
-            for (let x = 0; x < gradeLowerBounds.length; x++) {
-                
-                if (grades[i][1] == gradeLowerBounds[x][1]) {
-                    let temp = grades[x]
-                    grades[x] = grades[i]
-                    grades[i] = temp
-                }
-                
-    
-                
-    
-            }
-        }
-
-        for (let i = 0; i < grades.length; i++) {
-            let tempGradePos = grades[i].shift()
-            let tempBoundPos = gradeLowerBounds[i].shift()
-        }
-    }
-})
