@@ -47,6 +47,10 @@ let data = []
 let grades = []
 let gradeLowerBounds = []
 
+let calculateModeBool = false;
+let totalMarksValue = undefined;
+let totalQuestionsValue = undefined;
+
 const download = (content, filename, contentType) => {
     const a = document.createElement("a");
     const file = new Blob([content], { type: contentType })
@@ -117,11 +121,14 @@ menuElement.classList.add("menuPopup");
 let submitBtnMenu = document.createElement("button");
 submitBtnMenu.classList.add("submitMenuBtn");
 submitBtnMenu.textContent = "Submit"
+let menuSubmitBtn = document.querySelector(".submitMenuBtn");
 
+let calculMode = false;
 
 const calculateMode = () => {
     let header = document.createElement("p")
     let headerText = document.createTextNode("Calculate Mode");
+    header.classList.add("menuLgHeader")
     header.appendChild(headerText)
     let container = document.createElement("div");
     container.classList.add("radioContainer")
@@ -130,19 +137,266 @@ const calculateMode = () => {
     text.appendChild(textNode);
     let radioBtn = document.createElement("input")
     radioBtn.type = "checkbox"
+    if (calculateModeBool) {
+        radioBtn.checked = true
+    }
     container.appendChild(text)
     container.appendChild(radioBtn)
 
     let calcModeBtn = document.querySelector(".calcMode");
-    calcModeBtn.appendChild(menuElement)
-    menuElement.appendChild(header)
-    menuElement.appendChild(container)
-    menuElement.appendChild(submitBtnMenu)
+
+    let rect = calcModeBtn.getBoundingClientRect();
+    console.log(rect.top, rect.right, rect.bottom, rect.left);
+
+    const menuOpen = () => {
+        console.log(calculMode)
+        if (calculMode == false) {
+            menuElement.classList.remove("hidden")
+
+            console.log(menuElement.children)
+            menuElement.appendChild(header)
+            menuElement.appendChild(container)
+            menuElement.appendChild(submitBtnMenu)
+            positionMenu(rect.bottom, rect.left)
+            calculMode = true
+
+        } else {
+            let child = menuElement.firstElementChild;
+            while (child) {
+                menuElement.removeChild(child);
+                child = menuElement.lastElementChild;
+            }
+            menuElement.classList.add("hidden")
+            calculMode = false
+        }
+        
+    }
+
+    menuOpen()
+
+    document.querySelector(".submitMenuBtn").addEventListener("click", () => {
+        if (radioBtn.checked) {
+            calculateModeBool = true
+            // console.log(calculateModeBool)
+            calculateMode()
+        } else {
+            calculateModeBool = false
+            calculateMode()
+        }
+    })
+    
 }
 
-// document.querySelector(".calcMode").addEventListener("click", () => {
-//     calculateMode()
-// })
+
+
+totalMarksMode = () => {
+    let header = document.createElement("p")
+    let headerText = document.createTextNode("Total Marks");
+    header.classList.add("menuLgHeader")
+    header.appendChild(headerText)
+    let radioBtn = document.createElement("input")
+    radioBtn.placeholder = "Total Marks: "
+    if (totalMarksValue > 0) {
+        radioBtn.placeholder = totalMarksValue
+    }
+
+    let calcModeBtn = document.querySelector(".totalMarks");
+
+    let rect = calcModeBtn.getBoundingClientRect();
+    // console.log(rect.top, rect.right, rect.bottom, rect.left);
+
+    const menuOpen = () => {
+        // console.log(calculMode)
+        if (calculMode == false) {
+            menuElement.classList.remove("hidden")
+
+            // console.log(menuElement.children)
+            menuElement.appendChild(header)
+            menuElement.appendChild(radioBtn)
+            menuElement.appendChild(submitBtnMenu)
+            positionMenu(rect.bottom, rect.left)
+            calculMode = true
+
+        } else {
+            let child = menuElement.firstElementChild;
+            while (child) {
+                menuElement.removeChild(child);
+                child = menuElement.lastElementChild;
+            }
+            menuElement.classList.add("hidden")
+            calculMode = false
+        }
+        
+    }
+
+    menuOpen()
+    
+    document.querySelector(".submitMenuBtn").addEventListener("click", () => {
+        if (+radioBtn.value) {
+            totalMarksValue = +radioBtn.value
+            console.log(totalMarksValue)
+            totalMarksMode()
+        } else {
+            totalMarksMode()
+        }
+    })
+}
+
+
+
+
+
+questionCountMode = () => {
+    let header = document.createElement("p")
+    let headerText = document.createTextNode("Question Count");
+    header.classList.add("menuLgHeader")
+    header.appendChild(headerText)
+    let radioBtn = document.createElement("input")
+    radioBtn.placeholder = "Question Count: "
+    if (totalQuestionsValue > 0) {
+        radioBtn.placeholder = totalQuestionsValue
+    }
+
+    let calcModeBtn = document.querySelector(".questCount");
+
+    let rect = calcModeBtn.getBoundingClientRect();
+    console.log(rect.top, rect.right, rect.bottom, rect.left);
+
+    const menuOpen = () => {
+        console.log(calculMode)
+        if (calculMode == false) {
+            menuElement.classList.remove("hidden")
+
+            console.log(menuElement.children)
+            menuElement.appendChild(header)
+            menuElement.appendChild(radioBtn)
+            menuElement.appendChild(submitBtnMenu)
+            positionMenu(rect.bottom, rect.left)
+            calculMode = true
+
+        } else {
+            let child = menuElement.firstElementChild;
+            while (child) {
+                menuElement.removeChild(child);
+                child = menuElement.lastElementChild;
+            }
+            menuElement.classList.add("hidden")
+            calculMode = false
+        }
+        
+    }
+
+    menuOpen()
+
+    document.querySelector(".submitMenuBtn").addEventListener("click", () => {
+        if (+radioBtn.value) {
+            totalQuestionsValue = +radioBtn.value
+            questionCountMode()
+        } else {
+            questionCountMode()
+        }
+    })
+}
+
+
+gradeBoundariesMode = () => {
+    let header = document.createElement("p")
+    let headerText = document.createTextNode("Grade Boundaries");
+    header.classList.add("menuLgHeader")
+    header.appendChild(headerText)
+    let radioBtn = document.createElement("input")
+    radioBtn.placeholder = "Grade Boundaries: "
+
+    let calcModeBtn = document.querySelector(".gradeBoundariesLg");
+
+    let rect = calcModeBtn.getBoundingClientRect();
+    console.log(rect.top, rect.right, rect.bottom, rect.left);
+
+    const menuOpen = () => {
+        console.log(calculMode)
+        if (calculMode == false) {
+            menuElement.classList.remove("hidden")
+
+            console.log(menuElement.children)
+            menuElement.appendChild(header)
+            menuElement.appendChild(radioBtn)
+            menuElement.appendChild(submitBtnMenu)
+            positionMenu(rect.bottom, rect.left)
+            calculMode = true
+
+        } else {
+            let child = menuElement.firstElementChild;
+            while (child) {
+                menuElement.removeChild(child);
+                child = menuElement.lastElementChild;
+            }
+            menuElement.classList.add("hidden")
+            calculMode = false
+        }
+        
+    }
+
+    menuOpen()
+
+    document.querySelector(".submitMenuBtn").addEventListener("click", () => {
+        if (+radioBtn.value) {
+            totalGrades = +radioBtn.value
+
+            let child = menuElement.firstElementChild;
+            while (child) {
+                menuElement.removeChild(child);
+                child = menuElement.lastElementChild;
+            }
+
+            // let gradeInputs = new DocumentFragment()
+            // gradeInputs.classList.add("gradesContainer")
+            
+            // let parentNode = menuElement.parentNode
+            let header = document.createElement("p")
+            let headerText = document.createTextNode("Grade Boundaries");
+            header.classList.add("menuLgHeader")
+            header.appendChild(headerText)
+            menuElement.appendChild(header)
+        
+            for (let i = 0; i < totalGrades; i++) {
+                let container = document.createElement("div")
+                container.classList.add("container")
+                let gradeInput = document.createElement("input")
+                gradeInput.classList.add("gradeName")
+                gradeInput.placeholder = "Grade:"
+                let gradeBoundary = document.createElement("input")
+                gradeBoundary.classList.add("gradeLBound")
+                gradeBoundary.placeholder = "Bound:"
+                container.append(gradeInput, gradeBoundary)
+                // gradeInputs.append(container)
+                // parentNode.insertBefore(gradeInputs, menuElement)
+                menuElement.appendChild(container)
+            }
+
+            menuElement.appendChild(submitBtnMenu)
+
+
+
+            // gradeBoundariesMode()
+        } else {
+            gradeBoundariesMode()
+        }
+    })
+    
+}
+
+
+positionMenu = (bottom, left) => {
+
+
+    menuElement.style.zIndex = "2";
+    menuElement.style.position = "absolute";
+    menuElement.style.top = bottom + "px";
+    menuElement.style.left = left + "px";
+    document.querySelector("body").appendChild(menuElement)
+
+}
+
 
 submitParamsButton.addEventListener("click", () => {
     if (+document.querySelector(".gradeCount").value > 0) {
